@@ -12,31 +12,27 @@
 #define INFEASIBLE -1
 #define OVERFLOW -2
 
-typedef int Status;
-
-typedef struct
+typedef struct Element
 {
     char name[50];
     int age;
-    ElemType *_prev;
-    ElemType *_next;
-} ElemType;
+} Element;
 
-typedef struct
+typedef struct List
 {
-    ElemType *data;
+    Element *data;
     int length;
 } List;
 
-Status list_init(List *list);
+int list_init(List *list);
 void list_destory(List *list);
 void list_clear(List *list);
 int list_length(List *list);
 int list_is_empty(List *list);
-int list_elem_get(List *list, int i, ElemType *elem);
-int list_elem_locate(List *list, ElemType *elem);
-int list_elem_insert(List *list, int i, ElemType elem);
+int list_elem_get(List *list, int i, Element *elem);
+int list_elem_locate(List *list, Element *elem);
+int list_elem_insert(List *list, int i, Element elem);
 int list_elem_delete(List *list, int i);
-int list_elem_append(List *list, ElemType elem);
+int list_elem_append(List *list, Element elem);
 
 #endif /* end _LIST_H */

@@ -15,9 +15,9 @@ int main()
     return 0;
 }
 
-Status list_init(List *list)
+int list_init(List *list)
 {
-    list->data = (List *) malloc(sizeof(ElemType) * MAX_SIZE);
+    list->data = (List *) malloc(sizeof(Element) * MAX_SIZE);
     
     if (!list->data) {
         return OVERFLOW;
@@ -50,7 +50,7 @@ int list_is_empty(List *list)
     return list->length == 0 ? 1 : 0;
 }
 
-int list_elem_get(List *list, int i, ElemType *elem)
+int list_elem_get(List *list, int i, Element *elem)
 {
     if (i < 1 || i > list->length) {
         return ERROR;
@@ -61,9 +61,9 @@ int list_elem_get(List *list, int i, ElemType *elem)
     return OK;
 }
 
-int list_elem_locate(List *list, ElemType *elem)
+int list_elem_locate(List *list, Element *elem)
 {
-    ElemType *temp;
+    Element *temp;
     for (int i = 0; i < list->length; i++) {
         temp = &list->data[i];
         if (temp->name == elem->name && temp->age == elem->age) {
@@ -74,7 +74,7 @@ int list_elem_locate(List *list, ElemType *elem)
     return 0;
 }
 
-int list_elem_insert(List *list, int i, ElemType elem)
+int list_elem_insert(List *list, int i, Element elem)
 {
     if (i < 1 || i > (list->length + 1) || list->length == MAX_SIZE) {
         return ERROR;
@@ -106,7 +106,7 @@ int list_elem_delete(List *list, int i)
     return OK;
 }
 
-int list_elem_append(List *list, ElemType elem)
+int list_elem_append(List *list, Element elem)
 {
     if (list->length == MAX_SIZE) {
         return OVERFLOW;
