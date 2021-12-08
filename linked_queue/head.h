@@ -10,8 +10,17 @@ typedef struct Element {
 
 typedef struct QueueNode {
     Element data;
-    struct QueueNode *prev;
     struct QueueNode *next;
-} QueueNode, *LinkQueue;
+} QueueNode;
+
+typedef struct {
+    QueueNode *front, *rear;
+} LinkQueue;
+
+int queue_init(LinkQueue *queue);
+int queue_is_empty(LinkQueue *queue);
+int queue_send(LinkQueue *queue, Element *elem);
+int queue_peek(LinkQueue *queue, Element *elem);
+void queue_print(LinkQueue *queue);
 
 #endif
