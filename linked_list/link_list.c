@@ -200,22 +200,9 @@ int list_insert_prev_node(ListNode *node, Element elem)
 
 void list_print(LinkList liner)
 {
-    if (liner == NULL) {
-        return;
+    for (ListNode *next = liner->next; next != NULL; next = next->next) {
+        printf("ID. %d, Name %s, Score %d\n", next->data.id, next->data.name, next->data.score);
     }
-
-    ListNode *next = liner->next;
-
-    while (next != NULL) {
-
-        if (&next->data != NULL) {
-            printf("ID. %d, Name %s, Score %d\n", next->data.id, next->data.name, next->data.score);
-        }
-
-        next = next->next;
-    }
-
-    return;   
 }
 
 int list_tail_create(LinkList liner)
@@ -332,21 +319,18 @@ void list_merge(LinkList l1, LinkList l2) {
     l2cur = l2->next;
 
     while (l1cur != NULL && l2cur != NULL) {
-        if (l1cur->data.score < l2cur->data.score) {
+        if (l1cur->data.score <= l2cur->data.score) {
+            if (l1cur->data.score == l2cur->data.score) {
+                l2cur      = l2cur->next;
+            }
+
             l1in->next = l1cur;
             l1in       = l1in->next;
             l1cur      = l1cur->next;
         } else {
-            if (l1cur->data.score == l2cur->data.score) {
-                l1in->next = l1cur;
-                l1in       = l1in->next;
-                l1cur      = l1cur->next;
-                l2cur      = l2cur->next;
-            } else {
-                l1in->next = l2cur;
-                l1in       = l1in->next;
-                l2cur      = l2cur->next;
-            }
+            l1in->next = l2cur;
+            l1in       = l1in->next;
+            l2cur      = l2cur->next;
         }
     }
 
