@@ -321,7 +321,7 @@ void list_merge(LinkList l1, LinkList l2) {
     while (l1cur != NULL && l2cur != NULL) {
         if (l1cur->data.score <= l2cur->data.score) {
             if (l1cur->data.score == l2cur->data.score) {
-                l2cur      = l2cur->next;
+                l2cur = l2cur->next;
             }
 
             l1in->next = l1cur;
