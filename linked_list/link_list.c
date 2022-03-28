@@ -7,14 +7,25 @@
 int main(void)
 {
     LinkList liner = NULL;
+    LinkList l2 = NULL;
 
     if (list_init(&liner) < 1) {
         printf("List init fail");
         return -1;
     }
 
-    list_tail_create(liner);
+    if (list_init(&l2) < 1) {
+        printf("List 2 init fail");
+        return -1;
+    }
 
+    list_tail_create(liner);
+    list_print(liner);
+
+    list_tail_create(l2);
+    list_print(l2);
+
+    list_merge(liner, l2);
     list_print(liner);
 
     return 0;
@@ -198,7 +209,7 @@ void list_print(LinkList liner)
     while (next != NULL) {
 
         if (&next->data != NULL) {
-            printf("No. %s, Name %s, Score %d\n", next->data.no, next->data.name, next->data.score);
+            printf("ID. %d, Name %s, Score %d\n", next->data.id, next->data.name, next->data.score);
         }
 
         next = next->next;
@@ -217,7 +228,12 @@ int list_tail_create(LinkList liner)
         Element elem;
 
         printf("Enter: ");
-        scanf("%s %s %d", elem.no, elem.name, &score);
+        scanf("%s %d", elem.name, &score);
+        if (score < 1) {
+            break;
+        }
+
+        elem.id = tail->data.id > 0 ? (tail->data.id + 1) : 1;
         elem.score = score;
 
         node = (ListNode *) malloc(sizeof(ListNode));
@@ -227,7 +243,7 @@ int list_tail_create(LinkList liner)
         tail->next = node;
         tail = node;
 
-    } while (score >= 60);
+    } while (score > 0);
 
     return OK;
 }
@@ -303,4 +319,36 @@ int list_delete_node(LinkList liner, ListNode *node)
     }
 
     return OK;
+}
+
+// 两个单链表合并
+// 每个链表都是从小到大排序的
+// 合并到第一个链表
+// O(n*m)
+void list_merge(LinkList l1, LinkList l2) {
+    ListNode *l1in, *l1cur, *l2cur;
+    l1in  = l1;
+    l1cur = l1->next;
+    l2cur = l2->next;
+
+    while (l1cur != NULL && l2cur != NULL) {
+        if (l1cur->data.score < l2cur->data.score) {
+            l1in->next = l1cur;
+            l1in       = l1in->next;
+            l1cur      = l1cur->next;
+        } else {
+            if (l1cur->data.score == l2cur->data.score) {
+                l1in->next = l1cur;
+                l1in       = l1in->next;
+                l1cur      = l1cur->next;
+                l2cur      = l2cur->next;
+            } else {
+                l1in->next = l2cur;
+                l1in       = l1in->next;
+                l2cur      = l2cur->next;
+            }
+        }
+    }
+
+    l1in->next = l1cur != NULL ? l1cur : l2cur;
 }

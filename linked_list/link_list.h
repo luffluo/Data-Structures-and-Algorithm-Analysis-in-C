@@ -13,6 +13,7 @@
 
 typedef struct Element
 {
+    int id;
     char no[10];
     char name[10];
     int score;
@@ -37,5 +38,6 @@ int list_delete_node(LinkList liner, ListNode *node);
 int list_get_prev_node(LinkList liner, ListNode *node, ListNode *result);
 int list_tail_create(LinkList liner);
 void list_print(LinkList liner);
+void list_merge(LinkList l1, LinkList l2);
 
 #endif
