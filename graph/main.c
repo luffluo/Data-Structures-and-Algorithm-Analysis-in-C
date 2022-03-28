@@ -10,22 +10,71 @@ int main(void) {
     printf("%d\n", graph_v_degrees(&graph, 'B'));
     printf("%d\n", graph_v_degrees(&graph, 'C'));
 
+    /**
+    ALGraph algraph;
+    algraph.vex_num = 5;
+    algraph.arc_num = 6;
+    algraph.vexs[0].vex = 'A';
+    algraph.vexs[1].vex = 'B';
+    algraph.vexs[2].vex = 'C';
+    algraph.vexs[3].vex = 'D';
+    algraph.vexs[4].vex = 'E';
+
+    GraphLinkArc a_b = {1, NULL};
+    GraphLinkArc a_d = {3, NULL};
+    a_b.next_arc = &a_d;
+    algraph.vexs[0].first_arc = &a_b;
+
+    GraphLinkArc b_a = {0, NULL};
+    GraphLinkArc b_c = {2, NULL};
+    GraphLinkArc b_e = {4, NULL};
+    b_a.next_arc = &b_c;
+    b_c.next_arc = &b_e;
+    algraph.vexs[1].first_arc = &b_a;
+    */
+
     return 0;
 }
 
 void graph_init(AMGraph *graph) {
-    graph->vexnum = 3;
-    graph->arcnum = 4;
+    printf("Enter vex num: ");
+    scanf("%d", &graph->vexnum);
+    printf("vex num %d\n", graph->vexnum);
 
-    char vexs[] = {'A', 'B', 'C'};
-    for (int i = 0; i < graph->vexnum; i++) {
-        graph->vexs[i] = vexs[i];
+    printf("Enter arc num: ");
+    scanf("%d", &graph->arcnum);
+    printf("arc num %d\n", graph->arcnum);
+
+    char vex;
+    for (int i = 0; ;) {
+        printf("Enter vex: ");
+        vex = getchar();
+        if (vex >= 65 && vex <= 90) {
+            graph->vexs[i] = vex;
+            printf("%d index vex is %c\n", i, graph->vexs[i]);
+            i++;
+        }
+        
+        if (i == graph->vexnum) {
+            break;
+        }
     }
 
-    int arcs[MAX_VERTEX_NUM][MAX_VERTEX_NUM] = {{0, 1, 1}, {1, 0, 0}, {1, 0, 0}};
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < graph->vexnum; j++) {
-            graph->arcs[i][j] = arcs[i][j];
+    char a, b;
+    int x, y;
+    for (int i = 0; ;) {
+        printf("Enter arc: ");
+        scanf("%c%c", &a, &b);
+        if (a >= 65 && a <= 90 && b >= 65 && b <= 90) {
+            x = graph_v_index(graph, a);
+            y = graph_v_index(graph, b);
+            printf("%c index is %d, %c index is %d\n", a, x, b, y);
+            graph->arcs[x][y] = 1;
+            i++;
+        }
+
+        if (i == graph->arcnum) {
+            break;
         }
     }
 }

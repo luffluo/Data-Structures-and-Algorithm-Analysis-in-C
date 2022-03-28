@@ -14,6 +14,7 @@
 
 typedef struct Element
 {
+    int key;
     char name[50];
     int age;
 } Element;
