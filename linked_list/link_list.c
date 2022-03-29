@@ -336,3 +336,23 @@ void list_merge(LinkList l1, LinkList l2) {
 
     l1in->next = l1cur != NULL ? l1cur : l2cur;
 }
+
+// chapter-2 13 question
+// delete all elements that equal x
+void delete_x(LinkList list, Element x) {
+    ListNode *prev, *cur, *del;
+    prev = list;
+    cur = list->next;
+
+    while (cur != NULL) {
+        if (cur->data.score == x.score) {
+            del = cur;
+            cur = cur->next;
+            free(del);
+            prev->next = cur;
+        } else {
+            prev = cur;
+            cur = cur->next;
+        }
+    }
+}

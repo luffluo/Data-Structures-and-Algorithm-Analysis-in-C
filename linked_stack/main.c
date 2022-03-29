@@ -1,7 +1,6 @@
 #include "head.h"
 
-int main(void)
-{
+int main(void) {
     LinkStack stack;
 
     stack_init(&stack);
@@ -11,6 +10,9 @@ int main(void)
 
     Element rose = {"Rose"};
     stack_push(stack, &rose);
+
+    Element joy = {"Joy"};
+    stack_push(stack, &joy);
 
     stack_printf(stack);
 
@@ -22,8 +24,7 @@ int main(void)
     return 0;
 }
 
-int stack_init(LinkStack *stack)
-{
+int stack_init(LinkStack *stack) {
     *stack = (StackNode *) malloc(sizeof(StackNode));
 
     if (*stack == NULL) {
@@ -35,8 +36,7 @@ int stack_init(LinkStack *stack)
     return 1;
 }
 
-int stack_is_empty(LinkStack stack)
-{
+int stack_is_empty(LinkStack stack) {
     if (stack == NULL || stack->next == NULL) {
         return 1;
     }
@@ -44,8 +44,8 @@ int stack_is_empty(LinkStack stack)
     return 0;
 }
 
-int stack_push(LinkStack stack, Element *elem)
-{
+// 头插法
+int stack_push(LinkStack stack, Element *elem) {
     if (stack == NULL) {
         return 0;
     }
@@ -59,8 +59,7 @@ int stack_push(LinkStack stack, Element *elem)
     return 1;
 }
 
-StackNode *stack_pop(LinkStack stack)
-{
+StackNode *stack_pop(LinkStack stack) {
     if (stack_is_empty(stack)) {
         return NULL;
     }
@@ -72,15 +71,12 @@ StackNode *stack_pop(LinkStack stack)
     return node;
 }
 
-StackNode *stack_top(LinkStack stack)
-{
+StackNode *stack_top(LinkStack stack) {
     return stack->next;
 }
 
-void stack_printf(LinkStack stack)
-{
-    while (stack->next != NULL)
-    {
+void stack_printf(LinkStack stack) {
+    while (stack->next != NULL) {
         printf("Hi %s\n", stack->next->data.name);
         stack = stack->next;
     }
